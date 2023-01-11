@@ -1,0 +1,2 @@
+data = '{"os":"Windows","browser":"Discord Client","release_channel":"stable","client_version":"0.0.513","os_version":"15.6.0","os_arch":"x64","system_locale":"en-US","client_build_number":108924,"client_event_source":null}'
+x_super_properties = base64.b64encode(data.encode('ascii')).decode('ascii')

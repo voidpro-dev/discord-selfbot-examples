@@ -1,0 +1,2 @@
+import requests
+fingerprint = requests.get("https://discord.com/api/v9/experiments").json()["fingerprint"]
