@@ -1,2 +1,4 @@
-data = '{"os":"Windows","browser":"Discord Client","release_channel":"stable","client_version":"0.0.513","os_version":"15.6.0","os_arch":"x64","system_locale":"en-US","client_build_number":108924,"client_event_source":null}'
+chrome = '{"os":"Windows","browser":"Chrome","device":"","system_locale":"ja","browser_user_agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36","browser_version":"109.0.0.0","os_version":"10","referrer":"","referring_domain":"","referrer_current":"","referring_domain_current":"","release_channel":"stable","client_build_number":168147,"client_event_source":null}'
+windowsapp = '{"os":"Windows","browser":"Discord Client","release_channel":"stable","client_version":"1.0.9008","os_version":"10.0.19044","os_arch":"x64","system_locale":"en-US","client_build_number":168147,"client_event_source":null}'
+
 x_super_properties = base64.b64encode(data.encode('ascii')).decode('ascii')
