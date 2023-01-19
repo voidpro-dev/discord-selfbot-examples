@@ -78,4 +78,4 @@ def joiner(token):
 
 for token in tokens:
 	joiner(token)
-  time.sleep(1) #slowly joining to bypassing official anti-raid
+	time.sleep(1) #slowly joining to bypassing official anti-raid
