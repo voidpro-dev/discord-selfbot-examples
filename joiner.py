@@ -1,7 +1,10 @@
 import requests, random, time, base64, threading, traceback
 
+# pip install --upgrade nopecha
+import nopecha
+
 invite = "https://discord.gg/ovérlay"
-key = "nopecha_key"
+nopecha.api_key = "nopecha_key"
 
 proxies = open("proxies.txt", "r").read().split("\n")
 tokens = open("alltoken.txt", "r").read().split("\n")
@@ -19,37 +22,21 @@ def solver(session, sitekey, url):
 	while True:
 		try:
 			print("Solving...")
-			#proxydata = proxy["http"].split("@")
-			#proxyauth = proxydata[0].split(":")
-			#proxyaddr = proxydata[1].split(":")
-			id = session.post('https://api.nopecha.com/token', json={
-				'type': 'hcaptcha',
-				'sitekey': sitekey,
-				'url': url,
-				#"proxy":{
-			    #    'scheme': 'http',
-			    #    'host': proxyaddr[0],
-			    #    'port': proxyaddr[1],
-			    #    'username': proxyauth[0],
-			    #    'password': proxyauth[1],
-			    #},
-				'key': key}).json()
-			id = id['data']
-			data = session.get(f"https://api.nopecha.com/token?key={key}&id={id}").json()
-			data = data["data"]
+			token = nopecha.Token.solve(
+				type='hcaptcha',
+				sitekey=sitekey,
+				url=url)
 			print("Solved")
-			return data
+			return token
 		except Exception as e:
-			print("Failed to solve")
-			time.sleep(0.5)
-			pass
+			print(f"Failed to solve : {e}")
 
 def joiner(token):
 	session = requests.Session()
 	proxy = {"http": get_proxy()}
 	fingerprint = session.get("https://discord.com/api/v9/experiments").json()["fingerprint"]
 	headers = {"authorization":token, "content-type":"application/json","x-fingerprint": fingerprint,"X-Super-Properties": x_super_property}
-	data = session.get("https://discord.com/api/v9/users/@me", headers={"authorization":token}).json()
+	data = session.get("https://discord.com/api/v9/users/@me/billing/country-code", headers={"authorization":token}).json()
 	if "code" in data:
 		code = data["code"]
 		if code == 0:
@@ -58,7 +45,10 @@ def joiner(token):
 		if code == 40002:
 			print("locked")
 			return
-	data = session.post(f"https://discord.com/api/v9/invites/{invite}", headers=headers).json()
+	if not "country_code" in data:
+		print("invalid token")
+		return
+	data = session.post(f"https://discord.com/api/v9/invites/{invite}", headers=headers, data="{}").json()
 	if not "captcha_key" in data:
 		if "code" in data:
 			code = data["code"]
